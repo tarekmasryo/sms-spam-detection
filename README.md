@@ -71,7 +71,7 @@ pip install pandas numpy matplotlib scikit-learn joblib
 ```bash
 git clone https://github.com/tarekmasryo/sms-spam-detection
 cd sms-spam-detection
-jupyter notebook notebooks/sms_spam_pipeline.ipynb
+jupyter notebook sms-spam-detection.ipynb
 ```
 
 - Place `SPAM text message 20170820 - Data.csv` under the repo or attach on Kaggle.
