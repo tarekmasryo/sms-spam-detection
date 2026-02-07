@@ -1,9 +1,23 @@
 __pycache__/
+.pytest_cache/
 .ipynb_checkpoints/
-*.pyc
+*.py[cod]
 *.pyo
 *.pyd
 .Python
+# Virtual envs
 env/
 venv/
+.venv/
 ENV/
+# Data (not committed)
+data/**
+# Artifacts / outputs (not committed)
+artifacts/**
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+!data/**/README.md
+!artifacts/**/README.md
