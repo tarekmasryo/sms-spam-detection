@@ -1,23 +1,23 @@
-# 📩 SMS Spam Detection — End-to-End Pipeline
+# 📩 SMS Spam Detection — Decision-Ready Pipeline
 
-Dual **TF-IDF (word + char)** → **Linear SVM (calibrated)** → nested CV + randomized search → F1-optimized thresholding → explainability & robustness tests.
+Dual **TF-IDF (word + char)** → **Linear SVM (calibrated)** → nested CV + randomized search → threshold policy → explainability & robustness checks.
+
+**Full case study:** `CASE_STUDY.md`
 
 ---
 
-## 🚀 Why this notebook?
-- **Kaggle-ready**: clean imports, reproducible seeds, minimal dependencies.
-- **EDA**: class balance, message length distributions.
-- **Modeling**: dual TF-IDF features + Linear SVC baseline.
-- **Model selection**: nested CV + randomized search for hyperparameters.
-- **Calibration + threshold tuning**: sigmoid scaling → reliable probabilities.
-- **Explainability**: top spam/ham n-grams.
-- **Robustness**: obfuscation test (`fr33`, `w1n`, `0ffers`).
-- **Artifacts**: models, metrics, metadata, and figures exported to `./artifacts/`.
+## ✅ What this repo provides
+- **Leak-safe evaluation** (nested CV)
+- **Calibrated probabilities** for decision-making
+- **Explicit threshold policy** (exported & reused in inference)
+- **Exported artifacts** under `./artifacts/`
+- **CLI inference** via `predict.py`
+- **Minimal dependencies**, CPU-friendly pipeline
 
 ---
 
 ## 📂 Dataset
-- **Source**: [UCI SMS Spam Collection (Kaggle mirror)](https://www.kaggle.com/datasets/uciml/sms-spam-collection-dataset)
+- **Source**: UCI SMS Spam Collection (Kaggle mirror)
 - **Columns**:
   - `v1` — original label (`ham` or `spam`)
   - `v2` — raw SMS text
@@ -49,21 +49,18 @@ Default Kaggle path used in the notebook:
 7. **Dual TF-IDF + Linear SVC Pipeline**
    - Nested CV + randomized search
    - Probability calibration (Platt scaling)
-   - Threshold tuning (F1-optimized)
+   - Threshold tuning (F1-optimized by default)
 8. **Evaluation** (classification report, PR/ROC curves, calibration plots)
 9. **Explainability** (top spam/ham n-grams, FP/FN cases)
 10. **Robustness** (obfuscation stress test)
-11. **Artifacts export** (models, metrics, metadata JSON)
+11. **Artifacts export** (model, metrics, metadata)
 
 ---
 
-## 📈 Results (Hold-out Set)
-- **F1 ≈ 0.95**
-- **PR-AUC ≈ 0.98**
-- **ROC-AUC ≈ 0.99**
-- **Brier ≈ 0.01**
-
-Confusion matrix and evaluation curves are saved under `./artifacts/`.
+## 📈 Results
+Run-specific metrics and plots are exported under `./artifacts/`:
+- Metrics: `artifacts/metrics.json`
+- Configuration + threshold: `artifacts/metadata.json`
 
 ---
 
@@ -84,6 +81,15 @@ pip install -r requirements.txt
 git clone https://github.com/tarekmasryo/sms-spam-detection
 cd sms-spam-detection
 pip install -r requirements.txt
+```
+
+Place the dataset CSV under:
+
+`./data/raw/SPAM text message 20170820 - Data.csv`
+
+Then run:
+
+```bash
 jupyter notebook sms-spam-detection.ipynb
 ```
 
@@ -104,9 +110,8 @@ python predict.py "See you at 6?"
 - **No leakage**: vectorizers fit only on training folds.
 - **Nested CV**: outer folds provide unbiased performance.
 - **Calibrated SVC**: converts margin scores → reliable probabilities.
-- **Threshold tuning**: optimizes F1 for imbalanced spam/ham classes.
-- **Robustness**: ~10% F1 drop under obfuscation → TF-IDF weakness.
-- **Next steps**: add augmented obfuscated data, compare with **FastText/DistilBERT**.
+- **Threshold policy**: exported for consistent inference.
+- **Robustness**: includes an obfuscation stress test; TF-IDF typically weakens under heavy adversarial transforms.
 
 ---
 
